@@ -22,6 +22,25 @@ int HashTable::hashFunction(int x) {
     return x % _opacity;
 }
 
+void HashTable::resize() {
+    std::vector<int> keys;
+
+    for (auto&& item : *_table) {
+        keys.push_back(item);
+    }
+
+    _table->clear();
+
+    _opacity *= 2;
+    _addCount = 0;
+    _collisions = 0;
+    _table->resize(_opacity);
+
+    for (auto&& item : keys) {
+        insert(item);
+    }
+}
+
 void HashTable::insert(int key)
 {
     int index = hashFunction(key);
